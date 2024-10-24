@@ -2,17 +2,16 @@ import {
   View,
   Text,
   ImageBackground,
-  SafeAreaView,
-  Platform,
-  StyleSheet,
   StatusBar,
 } from "react-native";
 import "../global.css";
 import beachImage from "@/assets/meditation-images/beach.webp";
-import { LinearGradient } from "expo-linear-gradient";
 import CustomButton from "@/components/CustomButton";
+import { useRouter } from "expo-router";
+import AppGradient from "@/components/AppGradient";
 
 export default function App() {
+  const router = useRouter();
   return (
     <View className="flex-1">
       <ImageBackground
@@ -20,41 +19,24 @@ export default function App() {
         resizeMode="cover"
         className="flex-1"
       >
-        <LinearGradient
-          className="flex-1"
-          colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}
-        >
-          <SafeAreaView
-            className="gap-10 justify-between flex-1 mx-5 my-10"
-            style={styles.androidSafeView}
-          >
-            <View>
-              <Text className="font-bold text-white text-4xl text-center">
-                Simple Medidation
-              </Text>
-              <Text className="text-white text-2xl text-center mt-3">
-                Simplifying Medidation
-              </Text>
-            </View>
-            <View>
-              <CustomButton
-                onPress={() => console.log("hello")}
-                title="Get Started!!"
-              />
-            </View>
-            <StatusBar barStyle={"light-content"} />
-          </SafeAreaView>
-        </LinearGradient>
+        <AppGradient colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}>
+          <View>
+            <Text className="font-bold text-white text-4xl text-center">
+              Simple Medidation
+            </Text>
+            <Text className="text-white text-2xl text-center mt-3">
+              Simplifying Medidation
+            </Text>
+          </View>
+          <View>
+            <CustomButton
+              onPress={() => router.push({ pathname: "./nature-meditate" })}
+              title="Get Started!!"
+            />
+          </View>
+          <StatusBar barStyle={"light-content"} />
+        </AppGradient>
       </ImageBackground>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  androidSafeView: {
-    paddingTop:
-      Platform.OS === "android" && StatusBar?.currentHeight
-        ? StatusBar?.currentHeight
-        : 0,
-  },
-});
